@@ -92,15 +92,17 @@ function compareHarPro(har, pro) {
         profileInfo,
         output = "";
     for (i = 0; i < har.harJs.entries.length; i++) {
-        profileInfo = pro.getUrlProfileInformation(har.harJs.entries[i].url);
-        if (profileInfo[har.harJs.entries[i].url]) {
-            found.push({
-                harEntry: har.harJs.entries[i],
-                profile: profileInfo[har.harJs.entries[i].url]
-            });
-        }
-        else {
-            unfound.push(har.harJs.entries[i]);
+        if (har.harJs.entries[i].isEntryJavaScript) {
+            profileInfo = pro.getUrlProfileInformation(har.harJs.entries[i].url);
+            if (profileInfo[har.harJs.entries[i].url]) {
+                found.push({
+                    harEntry: har.harJs.entries[i],
+                    profile: profileInfo[har.harJs.entries[i].url]
+                });
+            }
+            else {
+                unfound.push(har.harJs.entries[i]);
+            }
         }
     }
 
@@ -155,6 +157,6 @@ function help(){
 }
 
 function printVersion(){
-    console.log("1.0.0");
+    console.log("1.1.0");
     process.exit(0);
 }
